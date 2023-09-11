@@ -5,3 +5,4 @@ import userRoutes from "./userRoutes"
  router.use("/user",userRoutes)
 
  export default router
+ 
