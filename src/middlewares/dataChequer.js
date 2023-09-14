@@ -1,7 +1,8 @@
-import express from 'express'
-import successResponse from '../utils/successResponse'
-import User from '../model/User'
-import errorResponse from '../utils/errorResponse'
+import express from "express";
+import successResponse from "../utils/SuccessResponse";
+import User from "../model/User";
+import errorResponse from "../utils/errorResponse";
+
 class DataChequer{
     static userRegisterIsEmpty=(req,res,next)=>{
         const {firstName,lastName,email,password}=req.body

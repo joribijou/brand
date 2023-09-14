@@ -1,13 +1,12 @@
 import  express from "express"
-import MessageController  from "MessageController"
+import MessageController  from "../controller/messageController"
 import Datachequer from '../middlewares/dataChequer'
 import VerifyAccess from '../middlewares/verifyAccess'
 
 
 const router=express.Router()
 router.post("/",Datachequer.userRegisterIsEmpty,MessageController.createMessage)
-router.get("/",VerifyAccess,MessageController.getAllmessage)
-router.delete("/",VerifyAccess,MessageController.deleteAllMessage)
-
+router.get("/",MessageController. getAllMessage)
+router.delete("/",MessageController.deleteAllMessage)
 
 export default router 

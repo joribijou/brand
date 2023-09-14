@@ -10,8 +10,8 @@ const MessageSchema=new mongoose.Schema({
         required:[true,`please enter your email`]
     },
     sendAt:{
-        type:Data,
-        default:Data.now()
+        type:Date,
+        default:Date.now()
     }
     
 })

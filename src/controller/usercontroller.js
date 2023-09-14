@@ -21,8 +21,8 @@ class Usercontroller {
      const status=201
 
      const msg=`user successfuly created`
-     const data=user
-     SuccessResponse(res,status,msg,data)
+     const date=user
+     SuccessResponse(res,status,msg,date)
     } catch (error) {
       
         return errorResponse(res,403,error)
@@ -31,22 +31,22 @@ class Usercontroller {
   }
   static async login(req,res){
     //take data from body
-    const {email,password}=req.body
+    const {email,Password}=req.body
     //verify if email exist
     const user=await User.findOne({email})
     if(!user){
       return errorResponse(res,401,`Invalid email or password`)
     }else{
       //verify password
-      const comparePassword=bcrypt.compareSync(password,user.Password)
+      const comparePassword=bcrypt.compareSync(Password,user.Password)
       if(!comparePassword){
         return errorResponse(res,401,`Invalid email or Password`)
       }else{
         //generate a token
-        const token=jwt.sign({role:user.role,email:user.email,firstName:user.firstName,password:user.Password},process.env.SECRET_KEY,{expiresIn:"1d"})
+        const token=jwt.sign({role:user.role,email:user.email,firstName:user.firstName,Password:user.Password},process.env.SECRET_KEY,{expiresIn:"1d"})
 return res.status(200).json({
   token:token,
-  data:{
+  date:{
     email:user.email,
     firstName:user.firstName,
     password:user.Password,
@@ -64,8 +64,8 @@ return res.status(200).json({
     }else if(users){
       const status=200
       const msg=`all ${users.length} Users Found`
-      const data=users
-      return SuccessResponse(res,status,msg,data)
+      const date=users
+      return SuccessResponse(res,status,msg,date)
       
     }er
   }

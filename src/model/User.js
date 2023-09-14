@@ -20,7 +20,7 @@ const userSchemas = new mongoose.Schema({
     type:String,
     required:true
   },
-  confirmPassword:{
+ confirmPassword :{
     type:String
   },
   role:{

@@ -4,7 +4,7 @@ import successResponse from "../utils/SuccessResponse";
 
 class MessageController{
     static async createMessage(req,res){
-        const {email,message}=res.body;
+        const {email,message}=req.body;
         const msg=await Message.create({email,message})
         if(!msg){
             return errorResponse(res,401,`message not sent`) 
@@ -13,5 +13,21 @@ class MessageController{
             return successResponse(res,201,`message successfuly sent`,msg)
         }
     }
+    static async getAllMessage(req,res){
+        const msg=await Message.find()
+        if(!msg || msg.length==0){
+            return errorResponse(res,401,`no message found`)
+
+        }else{
+            return successResponse(res,200,`message ${msg.length} successfuly retrieve`,msg)
+        }
+    }
+    static async deleteAllMessage(req,res){
+        const msg=await Message.deleteMany()
+        if(!msg){
+            return successResponse(res,200,`message deleted`)
+        }
+    }
+
 }
 export default MessageController
