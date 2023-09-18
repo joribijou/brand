@@ -4,6 +4,8 @@ import errorResponse from "../utils/errorResponse";
 import successResponse from "../utils/successResponse";
 
 class CommentController {
+
+    
   static async postComment(req, res) {
     const blogIdParams = req.params.id;
     req.body.user = req.user._id;
@@ -24,10 +26,12 @@ class CommentController {
       return successResponse(res, 200, `comment successfuly created`, news);
     }
   }
+
   static async getAllComment(req, res) {
     const comments = await Comment.find();
     return successResponse(res, 200, `success ${comments.length}`, comments);
   }
+
   static async deleteOneComment(req, res) {
     const id = req.params.id;
     const deleteComment = await Comment.findByIdAndDelete({ _id: id });

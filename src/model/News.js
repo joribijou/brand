@@ -1,30 +1,50 @@
 import mongoose from "mongoose";
 
-const NewsSchema=new mongoose.Schema({
-    newsMainTitle:{
-        type:String
+const NewsSchema = new mongoose.Schema({
+  newsMainTitle: {
+    type: String,
+  },
+  newsTitle: {
+    type: String,
+  },
+  newsSummaryDescription: {
+    type: String,
+  },
+  newsDescription: {
+    type: String,
+  },
+  newsImage: {
+    type: Array,
+  },
+  publisher: {
+    type: String,
+  },
+  postedAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  likes: {
+    type: Number,
+    default: 0,
+  },
+  dislikes: {
+    type: Number,
+    default: 0,
+  },
+  comment: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
     },
-    newsTitle:{
-        type:String
-    },
-    newSummaryDescription:{
-        type:String
-    },
-    newsDescription:{
-        type:String
-    },
-    newsImage:{
-        type:Array
-    },
-    Publisher:{
-        type:String
-    },
-    PostedAt:{
-        type:Date,
-        default:Date.now()
-    }
-})
-const News=mongoose.model("News",NewsSchema)
+  ],
+});
+NewsSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "comment",
+    select: "comment postedAt",
+  });
+  next();
+});
 
-
-export default News
+const News = mongoose.model("News", NewsSchema);
+export default News;
