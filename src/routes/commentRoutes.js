@@ -4,7 +4,7 @@ import VerifyAccess from "../middlewares/verifyAccess";
 
 const router = express.Router();
 
-router.post("/:id", VerifyAccess("user"), CommentController.postComment);
+router.post("/:id",VerifyAccess("user"), CommentController.postComment);
 router.get("/", CommentController.getAllComment);
 router.delete("/:id", CommentController.deleteOneComment);
 

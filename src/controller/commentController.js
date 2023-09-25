@@ -1,15 +1,12 @@
-import Comment from "../model/Comment";
+import Comment from "../model/comment";
 import News from "../model/News";
 import errorResponse from "../utils/errorResponse";
-import successResponse from "../utils/successResponse";
+import successResponse from "../utils/SuccessResponse";
 
 class CommentController {
-
-    
   static async postComment(req, res) {
     const blogIdParams = req.params.id;
     req.body.user = req.user._id;
-    console.log("umu user uteyr comment ni .....", req.user);
     const comment = await Comment.create(req.body);
     const news = await News.findByIdAndUpdate(
       { _id: blogIdParams },
@@ -26,12 +23,10 @@ class CommentController {
       return successResponse(res, 200, `comment successfuly created`, news);
     }
   }
-
   static async getAllComment(req, res) {
     const comments = await Comment.find();
     return successResponse(res, 200, `success ${comments.length}`, comments);
   }
-
   static async deleteOneComment(req, res) {
     const id = req.params.id;
     const deleteComment = await Comment.findByIdAndDelete({ _id: id });

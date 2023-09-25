@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const MessageSchema=new mongoose.Schema({
-    email:{
+   email :{
         type:String,
         required:[true,'please enter your email'],
       

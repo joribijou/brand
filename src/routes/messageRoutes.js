@@ -1,13 +1,16 @@
-import  express from "express"
-import MessageController  from "../controller/messageController"
-import Datachequer from '../middlewares/dataChequer'
-import VerifyAccess from '../middlewares/verifyAccess'
+import express from "express";
+import MessageController from "../controller/messageController";
+import DataChequer from "../middlewares/dataChequer";
+import VerifyAccess from "../middlewares/verifyAccess";
 
+const router = express.Router();
 
-const router=express.Router();
+router.post(
+  "/",
+  DataChequer.userRegisterIsEmpty,
+  MessageController.createMessage
+);
+router.get("/", VerifyAccess("admin"), MessageController.getAllMessage);
+router.delete("/", VerifyAccess("admin"), MessageController.deleteAllMessage);
 
-router.post("/",Datachequer.userRegisterIsEmpty,MessageController.createMessage)
-router.get("/",MessageController. getAllMessage)
-router.delete("/",MessageController.deleteAllMessage)
-
-export default router 
+export default router;
