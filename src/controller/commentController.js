@@ -20,7 +20,7 @@ class CommentController {
     if (!news) {
       return errorResponse(res, 401, `no blog found`);
     } else {
-      return successResponse(res, 200, `comment successfuly created`, news);
+      return successResponse(res, 200, `comment are successfuly created`, news);
     }
   }
   static async getAllComment(req, res) {
@@ -31,9 +31,9 @@ class CommentController {
     const id = req.params.id;
     const deleteComment = await Comment.findByIdAndDelete({ _id: id });
     if (!deleteComment) {
-      return errorResponse(res, 401, "comment not found");
+      return errorResponse(res, 401, "comment are not found");
     } else {
-      return successResponse(res, 200, `comment successfuly deleted`);
+      return successResponse(res, 200, `comment are successfuly deleted`);
     }
   }
 }

@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 
 class UserController {
   static async createUser(req, res) {
+        req.user = verifyToken.user;
     const { firstName, lastName, email, Password, role } = req.body;
     try {
       if (Password !== req.body.confirmPassword) {
@@ -15,9 +16,7 @@ class UserController {
           `Password and confirm password is not matched`
         );
       }
-
       const hashPassword = bcrypt.hashSync(req.body.Password, 10);
-
       const user = await User.create({
         firstName,
         lastName,
@@ -25,7 +24,6 @@ class UserController {
         Password: hashPassword,
         role,
       });
-
       if (!user) {
         return errorResponse(res, 401, `user not created`);
       } else {
@@ -35,20 +33,17 @@ class UserController {
       return errorResponse(res, 403, error);
     }
   }
+
   static async login(req, res) {
-    //take data from body
     const { email, Password } = req.body;
-    //verify if email exist
     const user = await User.findOne({ email });
     if (!user) {
       return errorResponse(res, 401, `Invalid email or password`);
     } else {
-      //verify password
       const comparePassword = bcrypt.compareSync(Password, user.Password);
       if (!comparePassword) {
         return errorResponse(res, 401, `Invalid email or password`);
       } else {
-        //generate a token
         const token = jwt.sign({ user: user }, process.env.SECRET_KEY, {
           expiresIn: "1d",
         });

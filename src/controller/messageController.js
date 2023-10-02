@@ -7,15 +7,15 @@ class MessageController{
         const {email,message}=req.body;
         const msg=await Message.create({email,message})
         if(!msg){
-            return errorResponse(res,401,`message not sent`)
+            return errorResponse(res,401,`message are not sent`)
         }else{
-            return successResponse(res,201,`message successfuly sent`,msg)
+            return successResponse(res,201,`message are successfuly sent`,msg)
         }
     }
     static async getAllMessage(req,res){
         const msg=await Message.find()
         if(!msg || msg.length==0){
-            return errorResponse(res,401,`no message found`)
+            return errorResponse(res,401,` message  not found`)
         }else{
             return successResponse(res,200,`message ${msg.length} successfuly retrieved`,msg)
         }
@@ -24,9 +24,9 @@ class MessageController{
     static async deleteAllMessage(req,res){
         const msg=await Message.deleteMany()
         if(!msg){
-            return errorResponse(res,401,`no message deleted`)
+            return errorResponse(res,401,`message not deleted`)
         }else{
-            return successResponse(res,200,`message deleted`)
+            return successResponse(res,200,`message are deleted`)
         }
     }
 

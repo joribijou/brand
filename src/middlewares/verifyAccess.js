@@ -3,10 +3,10 @@ import jwt from "jsonwebtoken";
 
 const VerifyAccess = (passRole) => {
   return (req, res, next) => {
-    //set token in header
+    
     const token = req.headers["auth-token"];
     if (!token) {
-      return errorResponse(res, 401, `No token provided`);
+      return errorResponse(res, 401, `No token provide`);
     } else {
       try {
         const verifyToken = jwt.verify(token, process.env.SECRET_KEY, {

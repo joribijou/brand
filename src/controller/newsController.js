@@ -3,9 +3,10 @@ import errorResponse from "../utils/errorResponse";
 import successResponse from "../utils/SuccessResponse";
 import sendEmail from "../utils/email";
 import User from "../model/User";
+import Category from "../model/Category"
 
 class NewsController {
-  //create a news
+ 
   static async createNews(req, res) {
     const news = await News.create(req.body);
 
@@ -17,12 +18,11 @@ class NewsController {
         return successResponse(res,201,`news successfuly posted`,news)
       }
     } catch (error) {
-      
+      return errorResponse(res, 201, error);
     }
    
   }
 
-  //find all news
   static async getAllNews(req, res) {
     const news = await News.find();
     try {
@@ -35,7 +35,6 @@ class NewsController {
       return errorResponse(res, 404, error);
     }
   }
-  //update a news
 
   static async updateNews(req, res) {
     const { id } = req.params;
@@ -44,16 +43,14 @@ class NewsController {
     });
     try {
       if (!news) {
-        return errorResponse(res, 401, `news not updated`);
+        return errorResponse(res, 401, `news are not updated`);
       } else {
-        return successResponse(res, 200, `News successfuly updated`, news);
+        return successResponse(res, 200, `News are successfuly updated`, news);
       }comment
     } catch (error) {
       return errorResponse(res, 404, error);
     }
   }
-
-  //get one news
 
   static async getOneNews(req, res) {
     const { id } = req.params;
@@ -75,28 +72,23 @@ class NewsController {
   }
   static async deleteAllNews(req, res) {
     const news = await News.deleteMany();
-    return successResponse(res, 200, "alll news deleted", news);
+    return successResponse(res, 200, "all news deleted", news);
   }
   static async like(req, res) {
-    //take news id from params
     const newsId = req.params.id;
-    //find news id from news schema
     const news = await News.findById({ _id: newsId });
     if (!news) {
-      return errorResponse(res, 401, `News not found`);
+      return errorResponse(res, 401, `News are not found`);
     } else {
-      //find user id from token
       const userId = req.user._id;
 
-      //found if user id from likes is already exist
       if (news.likes.includes(userId)) {
         return errorResponse(res, 401, "you already like the news");
       } else {
-        //find if the user Id is in dislike and remove it
         if (news.dislikes.includes(userId)) {
           news.dislikes.pull(userId);
         }
-        //send user id into likes
+        
         news.likes.push(userId);
         news.save();
         return successResponse(
@@ -115,11 +107,11 @@ class NewsController {
     const newsId = req.params.id;
     const news = await News.findById({ _id: newsId });
     if (!news) {
-      return errorResponse(res, 401, `News not found`);
+      return errorResponse(res, 401, `News can not found`);
     } else {
       const userId = req.user._id;
       if (news.dislikes.includes(userId)) {
-        return errorResponse(res, 401, `you already disliked`);
+        return errorResponse(res, 401, `you are already disliked`);
       }
       if (news.likes.includes(userId)) {
         news.likes.pull(userId);
