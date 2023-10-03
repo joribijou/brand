@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 
 class UserController {
   static async createUser(req, res) {
-        req.user = verifyToken.user;
+  
     const { firstName, lastName, email, Password, role } = req.body;
     try {
       if (Password !== req.body.confirmPassword) {
